@@ -5,12 +5,18 @@ const logger = require('morgan');
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-app.use('dev');
+// Always require and configure near the top
+require('dotenv').config();
+
+// Connect to the database
+require('./config/database');
+
+app.use(logger('dev'));
 app.use(express.json());
 
 // configure both serve-favicon & static middeware
 // to serve from the production "build" folder
-app.use(favicon(path.join(__dirname, 'build', 'favicon.io')));
+app.use(favicon(path.join(__dirname, 'build', 'favicon.ico')));
 app.use(express.static(path.join(__dirname, 'build')));
 
 // Put API routes here, before the "catch all" route
