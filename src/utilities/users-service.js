@@ -15,19 +15,21 @@ export async function signUp(userData) {
   }
 }
 
+export async function login(credentials) {
+    try {
+        const token = await usersAPI.login(credentials);
+        localStorage.setItem("token", token)
+        return getUser();
+    } catch (error) {
+        throw new Error("Invalid Log In");
+    }
+}
+
 export function logOut() {
   localStorage.removeItem("token");
 }
 
-export async function login(credentials) {
-  try {
-    const token = await usersAPI.login(credentials);
-    localStorage.setItem("token", token)
-    return getUser();
-  } catch (error) {
-    throw new Error("Invalid Log In");
-  }
-}
+
 export function getToken() {
   // getItem returns null if there's no string
   const token = localStorage.getItem("token");
@@ -46,4 +48,11 @@ export function getUser() {
   const token = getToken();
   // If there's a token, return the user in the payload, otherwise return
   return token ? JSON.parse(atob(token.split(".")[1])).user : null;
+}
+
+
+// For testing the validation of the token remove in apps
+export async function checkToken(){
+    const date = new Date(await usersAPI.checkToken());
+    return date;
 }

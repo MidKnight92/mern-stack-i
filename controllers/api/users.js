@@ -8,6 +8,7 @@ const jwt = require("jsonwebtoken");
 module.exports = {
   create,
   login,
+  checkToken
 };
 
 async function create(req, res) {
@@ -42,6 +43,12 @@ async function login(req, res) {
   } catch (error) {
     res.status(400).json(error);
   }
+}
+
+function checkToken(req, res) {
+  // req.user will always be present when a token is sent
+  console.log(`req.user`, req.user);
+  res.json(req.exp);
 }
 
 // Helper Functions

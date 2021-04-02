@@ -4,21 +4,15 @@ import SignUpForm from "../../components/SignUpForm/SignUpForm";
 
 export default function AuthPage({ setUser }) {
   const [showLogIn, setLogIn] = useState(false);
-  const handleClick = () => {
-    setLogIn(!showLogIn);
-  };
   return (
     <main>
+      <h3 onClick={() => setLogIn(!showLogIn)}>
+        {showLogIn ? "Log In" : "Sign Up"}
+      </h3>
       {showLogIn ? (
-        <>
-          <h3 onClick={handleClick}>Log In</h3>
-          <LoginForm setUser={setUser} />
-        </>
+        <LoginForm setUser={setUser} />
       ) : (
-        <>
-          <h3 onClick={handleClick}>Sign Up</h3>
-          <SignUpForm setUser={setUser} />
-        </>
+        <SignUpForm setUser={setUser} />
       )}
     </main>
   );
