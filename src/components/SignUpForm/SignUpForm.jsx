@@ -20,14 +20,7 @@ export default class SignUpForm extends Component {
   handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // First Approach // removes confirm and error so we don't send unnessecary data to server
-      // const formData = {...this.state};
-      // delete formData.confirm;
-      // delete formData.error;
-
-      // Second Approach // removes confirm and error so we don't send unnessecary data to server
-
-      
+      // removes confirm and error so we don't send unnessecary data to server    
       const { name, email, password } = this.state;
       const formData = { name, email, password };
       // The promise returned by the signUp service method will
