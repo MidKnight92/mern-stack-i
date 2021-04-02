@@ -19,6 +19,15 @@ export function logOut() {
   localStorage.removeItem("token");
 }
 
+export async function login(credentials) {
+  try {
+    const token = await usersAPI.login(credentials);
+    localStorage.setItem("token", token)
+    return getUser();
+  } catch (error) {
+    throw new Error("Invalid Log In");
+  }
+}
 export function getToken() {
   // getItem returns null if there's no string
   const token = localStorage.getItem("token");

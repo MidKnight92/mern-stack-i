@@ -1,10 +1,25 @@
+import { useState } from "react";
+import LoginForm from "../../components/LoginForm/LoginForm";
 import SignUpForm from "../../components/SignUpForm/SignUpForm";
 
 export default function AuthPage({ setUser }) {
+  const [showLogIn, setLogIn] = useState(false);
+  const handleClick = () => {
+    setLogIn(!showLogIn);
+  };
   return (
     <main>
-      <h1>AuthPage</h1>
-      <SignUpForm setUser={ setUser } />
+      {showLogIn ? (
+        <>
+          <h3 onClick={handleClick}>Log In</h3>
+          <LoginForm setUser={setUser} />
+        </>
+      ) : (
+        <>
+          <h3 onClick={handleClick}>Sign Up</h3>
+          <SignUpForm setUser={setUser} />
+        </>
+      )}
     </main>
   );
 }

@@ -1,7 +1,13 @@
+// Model
 const User = require("../../models/user");
+
+// Libriares
+const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+
 module.exports = {
   create,
+  login,
 };
 
 async function create(req, res) {
@@ -16,6 +22,24 @@ async function create(req, res) {
   } catch (error) {
     // Client will check foor non-200 status code
     // 400 Bad request
+    res.status(400).json(error);
+  }
+}
+
+async function login(req, res) {
+  try {
+    // Get user
+    const user = await User.findOne({email: req.body.email});
+    // No user found
+    if (!user) throw new Error();
+    // Check if passwords match
+    const verified = await bcrypt.compare(req.body.password, user.password);
+    // Passwords did not match
+    if (!verified) throw new Error();
+    // User verified send token
+    const token = createJWT(user);
+    res.json(token);
+  } catch (error) {
     res.status(400).json(error);
   }
 }
